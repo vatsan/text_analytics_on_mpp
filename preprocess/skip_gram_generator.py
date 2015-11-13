@@ -6,17 +6,19 @@ from itertools import combinations
 import ast
 
 def is_valid_k_skip(lst, k):
-    """
+    '''
         Validate if a given n-gram list (of token indices) contains valid k-skips.
         For instance, a 2-skip bigram, includes 0-skip bigrams, 1-skip bigrams 
         and 2-skip bigrams.
-    """
-    idx_diff = [(next_idx - current_idx) for current_idx, next_idx in zip(lst, lst[1:])]
-    valid_skips = set(range(k+2))
-    return len(set(idx_diff))==1 and (set(idx_diff).pop() in valid_skips)
+    '''
+    idx_diff = [(next_item[0] - current_item[0]) for current_item, next_item in zip(lst, lst[1:])]
+    valid_skips = set(range(1, k+2))
+    validity_check = [1 if idx in valid_skips else 0 for idx in idx_diff]
+    #check if every index is a valid skip
+    return sum(validity_check) == len(validity_check)
 
 def generate_k_skip_n_gram(lst, k, n):
-    """
+    '''
         Return all k-skip, n-grams as defined in 
         http://homepages.inf.ed.ac.uk/ballison/pdf/lrec_skipgrams.pdf
         ex: "Insurgents killed in ongoing fighting"
@@ -32,16 +34,15 @@ def generate_k_skip_n_gram(lst, k, n):
         insurgents in fighting, insurgents ongoing fighting, killed
         in ongoing, killed in fighting, killed ongoing fighting, in
         ongoing fighting}.
-    """
+    '''
     if n > len(lst) or k > len(lst):
         raise 'Invalid values for n:{0} or k:{1}'.format(n, k) 
     #Optimization for normal n-grams (0-skip-n-grams)
     if(k==0):
         return zip(*[lst[i:] for i in range(n)])
     else:
-        idx_token_dict = dict(map(lambda el: reversed(el), enumerate(lst)))
-        n_grams = combinations(lst, n)
-        return filter(lambda ngram: is_valid_k_skip(map(lambda el: idx_token_dict[el], ngram), k), n_grams)
+        n_grams = combinations(enumerate(lst), n)
+        return [[tup[1] for tup in ngram] for ngram in filter(lambda ngram: is_valid_k_skip(ngram, k), n_grams)]
 
 if(__name__== '__main__'):
     from sys import argv
