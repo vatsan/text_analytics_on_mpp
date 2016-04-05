@@ -1,5 +1,5 @@
 # Text analytics on MPP
-Collection of tutorials/exercises for text analytics/NLP on the Pivotal MPP platform (Greenplum/HAWQ). 
+Collection of tutorials for text analytics/NLP, including vector space models, neural language models and topic models on the Pivotal MPP platform (Greenplum/HAWQ). 
 
 ## Vector space models
 
