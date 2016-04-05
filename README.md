@@ -14,7 +14,7 @@ Collection of tutorials on text analytics/NLP, including vector space models, ne
     1. LDA topic models on 20-news-groups dataset.
     2. Grid search for LDA hyperparameters, on the 20-news-groups dataset.
 
-## Neural Language Models (Paragraph Vectors)
+## Neural Language Models (Paragraph Vectors, Word2Vec etc.)
 
     1. Classification models using Paragraph vector representation of 20-news-groups dataset using `doc2vec` package in `gensim`.
 
